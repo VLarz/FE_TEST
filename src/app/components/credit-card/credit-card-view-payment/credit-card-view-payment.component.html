@@ -1,1 +1,7 @@
-<p>credit-card-view-payment works!</p>
+<div *ngFor="let item of (payments | async)">
+  <p>{{ item.creditCardNumber }}</p>
+  <p>{{ item.cardHolder }}</p>
+  <p>{{ item.expirationDate }}</p>
+  <p>{{ item.securityCode }}</p>
+  <p>{{ item.amount }}</p>
+</div>

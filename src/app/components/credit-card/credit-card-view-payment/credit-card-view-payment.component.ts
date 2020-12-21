@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { CreditCardPayment } from 'src/app/models/credit-card-payment.model';
+
+import { AppState } from '../../../app.state';
 
 @Component({
   selector: 'app-credit-card-view-payment',
@@ -7,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreditCardViewPaymentComponent implements OnInit {
 
-  constructor() { }
+  payments: Observable<CreditCardPayment[]>;
+
+  constructor(private store: Store<{creditCardPayments: CreditCardPayment[]}>) { }
 
   ngOnInit(): void {
+    this.payments = this.store.select('creditCardPayments');
   }
 
 }

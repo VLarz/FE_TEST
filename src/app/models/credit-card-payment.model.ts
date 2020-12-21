@@ -3,6 +3,6 @@ export interface CreditCardPayment {
     cardHolder: string;
     expirationDate: Date;
     // securityCode?: string;
-    securityCode: string; // I changed to mandoratory because CCV is require in every payment.
+    securityCode: string; // I changed to mandoratory because CCV is required in every payment.
     amount: number;
 }

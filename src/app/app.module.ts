@@ -20,7 +20,9 @@ import { creditCardPaymentReducer } from './store/credit-card-payment.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({creditCardPayment: creditCardPaymentReducer}),
+    StoreModule.forRoot({
+      creditCardPayments: creditCardPaymentReducer
+    }),
     FormsModule,
     ReactiveFormsModule
   ],
