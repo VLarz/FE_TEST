@@ -9,6 +9,7 @@ import { CreditCardPaymentComponent } from './components/credit-card/credit-card
 import { CreditCardViewPaymentComponent } from './components/credit-card/credit-card-view-payment/credit-card-view-payment.component';
 import { CreditCardComponent } from './components/credit-card/credit-card.component';
 import { creditCardPaymentReducer } from './components/credit-card/store/credit-card-payment.reducer';
+import { HeaderComponent } from './components/common/header/header.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { creditCardPaymentReducer } from './components/credit-card/store/credit-
     CreditCardPaymentComponent,
     CreditCardComponent,
     CreditCardViewPaymentComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
