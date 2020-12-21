@@ -10,12 +10,12 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let item of (payments | async)">
-      <td>{{ item.creditCardNumber }}</td>
-      <td>{{ item.cardHolder }}</td>
-      <td>{{ item.expirationDate | date }}</td>
-      <td>{{ item.securityCode }}</td>
-      <td>{{ item.amount }}</td>
+    <tr *ngFor="let record of (paymentRecords | async)">
+      <td>{{ record.creditCardNumber }}</td>
+      <td>{{ record.cardHolder }}</td>
+      <td>{{ record.expirationDate | date }}</td>
+      <td>{{ record.securityCode }}</td>
+      <td>{{ record.amount }}</td>
     </tr>
   </tbody>
 </table>

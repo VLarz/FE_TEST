@@ -12,12 +12,13 @@ import { AppState } from '../../../app.state';
 })
 export class CreditCardViewPaymentComponent implements OnInit {
 
-  payments: Observable<CreditCardPayment[]>;
+  paymentRecords: Observable<CreditCardPayment[]>;
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.payments = this.store.select('creditCardPayments');
+    this.paymentRecords = this.store.select('creditCardPayments');
+    // no need to unsubscribe and ngOndestroy, Angular and NgRX will auto unsubscribe
   }
 
 }
