@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
+import * as PaymentActions from '../store/credit-card-payment.actions';
 @Component({
   selector: 'app-credit-card-payment',
   templateUrl: './credit-card-payment.component.html',
@@ -10,7 +12,7 @@ export class CreditCardPaymentComponent implements OnInit {
 
   paymentForm: FormGroup;
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -52,24 +54,24 @@ export class CreditCardPaymentComponent implements OnInit {
 
 
 
-  expirationValidation(): {[s: string]: boolean} {
+  // expirationValidation(): {[s: string]: boolean} {
 
-    if (this.paymentForm.get('expirationMonth').value) {
-      return;
-    }
-    // const month = '12';
-    // const year = this.paymentForm.get('expirationYear').value;
-    const currentMonth = new Date().getMonth() + 1;
-    const currentYear = new Date().getFullYear().toString().substr(-2);
-    // if (+month <= currentMonth) {
-    //   return {expired: true};
-    // }
-  }
+  //   if (this.paymentForm.get('expirationMonth').value) {
+  //     return;
+  //   }
+  //   // const month = '12';
+  //   // const year = this.paymentForm.get('expirationYear').value;
+  //   const currentMonth = new Date().getMonth() + 1;
+  //   const currentYear = new Date().getFullYear().toString().substr(-2);
+  //   // if (+month <= currentMonth) {
+  //   //   return {expired: true};
+  //   // }
+  // }
 
   onSubmit(): void {
     // if (!this.paymentForm.valid) {
     //   return;
     // }
-    console.log();
+    this.store.dispatch(new PaymentActions.AddPayment(this.paymentForm.value));
   }
 }

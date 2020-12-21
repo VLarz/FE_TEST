@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { CreditCardPayment } from '../models/credit-card-payment.model';
+import { CreditCardPayment } from '../../../models/credit-card-payment.model';
 
 export const ADD_PAYMENT = '[CREDIT CARD PAYMENT] ADD_PAYMENT';
 

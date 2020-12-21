@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { CreditCardPaymentComponent } from './components/credit-card/credit-card-payment/credit-card-payment.component';
 import { CreditCardViewPaymentComponent } from './components/credit-card/credit-card-view-payment/credit-card-view-payment.component';
 import { CreditCardComponent } from './components/credit-card/credit-card.component';
-import { creditCardPaymentReducer } from './store/credit-card-payment.reducer';
+import { creditCardPaymentReducer } from './components/credit-card/store/credit-card-payment.reducer';
 
 @NgModule({
   declarations: [

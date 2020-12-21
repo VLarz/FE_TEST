@@ -127,15 +127,10 @@
             <button
               type="submit"
               class="waves-effect waves-light btn"
-              [disabled]="!paymentForm.invalid">Submit</button>
+              [disabled]="paymentForm.invalid">Submit</button>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
-
-<span
-*ngIf="paymentForm.get('expirationMonth').errors['expired']">
-expired
-</span>

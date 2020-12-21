@@ -14,7 +14,7 @@ export class CreditCardViewPaymentComponent implements OnInit {
 
   payments: Observable<CreditCardPayment[]>;
 
-  constructor(private store: Store<{creditCardPayments: CreditCardPayment[]}>) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.payments = this.store.select('creditCardPayments');

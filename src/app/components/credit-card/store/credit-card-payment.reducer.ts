@@ -1,4 +1,4 @@
-import { CreditCardPayment } from '../models/credit-card-payment.model';
+import { CreditCardPayment } from '../../../models/credit-card-payment.model';
 import * as PaymentActions from './credit-card-payment.actions';
 
 const initialState: CreditCardPayment = {
