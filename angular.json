@@ -28,9 +28,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/materialize-css/dist/css/materialize.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/materialize-css/dist/js/materialize.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -123,6 +126,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "fe-test"
+    }
+  },
+  "defaultProject": "fe-test",
+  "cli": {
+    "analytics": "60ed33ab-05b9-45d3-92d9-27d5396a2203"
+  }
 }
