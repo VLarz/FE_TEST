@@ -1,1 +1,62 @@
-<p>credit-card-payment works!</p>
+<div class="row">
+  <div class="col s12 m7 offset-m3 l6 offset-l3">
+    <div class="card-panel">
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="input-field col s12">
+            <input
+              placeholder="1234 5678 9101 1121"
+              id="card_number"
+              type="text"
+              formControlName="creditCardNumber">
+            <label class="active" for="card_number">Credit Card Number</label>
+          </div>
+          <div class="input-field col s12">
+            <input
+              placeholder="Ex. Noctis Lucis Caelum"
+              id="card_holder"
+              type="text"
+              formControlName="cardHolder">
+            <label class="active" for="card_holder">Card Holder</label>
+          </div>
+          <div class="input-field col s3">
+            <input
+              placeholder="MM"
+              id="card_holder"
+              type="text"
+              maxlength="2"
+              formControlName="expirationMonth">
+            <label class="active" >Expiration</label>
+          </div>
+          <div class="input-field col s3">
+            <input
+              placeholder="YY"
+              type="text"
+              maxlength="2"
+              formControlName="expirationYear">
+          </div>
+          <div class="input-field col s6">
+            <input
+              placeholder="CVC"
+              id="security_code"
+              type="text"
+              maxlength="3"
+              formControlName="securityCode">
+            <label class="active" for="security_code">Security Code</label>
+          </div>
+          <div class="input-field col s12">
+            <input
+              placeholder="1000000"
+              id="card_holder"
+              type="number"
+              formControlName="amount">
+            <label class="active" for="card_holder">Amount</label>
+          </div>
+          <div class="col s12 center">
+            <button type="submit" class="waves-effect waves-light btn">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
