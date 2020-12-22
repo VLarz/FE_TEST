@@ -93,7 +93,6 @@ export class PaymentComponent implements OnInit {
       newDate.setFullYear(+('20' + this.expirationYear), +this.expirationMonth - 1, 1);
       const currentDate = new Date();
       if (newDate < currentDate) {
-        console.log(true);
         this.isExpired = true;
       } else {
         this.isExpired = false;
