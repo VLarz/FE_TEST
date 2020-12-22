@@ -28,7 +28,13 @@ export class PaymentComponent implements OnInit {
     const allowDigitOnly = /^[0-9]\d*$/;
 
     this.paymentForm = new FormGroup({
-      creditCardNumber: new FormControl(null, Validators.required),
+      creditCardNumber: new FormControl(
+        null,
+        [
+          Validators.required,
+          Validators.minLength(14),
+        ]
+      ),
       cardHolder: new FormControl(null, Validators.required),
       expirationMonth: new FormControl(
         null,
@@ -98,5 +104,14 @@ export class PaymentComponent implements OnInit {
         alert('Payment Successful');
         this.paymentForm.reset();
     });
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 }

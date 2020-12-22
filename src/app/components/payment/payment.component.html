@@ -3,24 +3,22 @@
     <div class="card-panel">
       <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
         <div class="row">
-
           <div class="input-field col s12">
             <input
-              placeholder="1234 5678 9101 1121"
+              placeholder="1234 5678 9101"
               id="card_number"
               type="text"
               formControlName="creditCardNumber"
+              (keypress)="numberOnly($event)"
               appCreditCardFormat>
             <label class="active" for="card_number">Credit Card Number</label>
             <span
               class="helper-text"
               *ngIf="paymentForm.get('creditCardNumber').invalid && paymentForm.get('creditCardNumber').touched">
-              <span
-              *ngIf="paymentForm.get('creditCardNumber').errors['required']">
+              <span *ngIf="paymentForm.get('creditCardNumber').errors['required']">
               Credit card number is required.
               </span>
-              <span
-              *ngIf="paymentForm.get('creditCardNumber').errors['minlength']">
+              <span *ngIf="paymentForm.get('creditCardNumber').errors['minlength']">
               Invalid format.
               </span>
             </span>
