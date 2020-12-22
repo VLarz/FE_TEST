@@ -20,4 +20,16 @@ export class PaymentService {
         record
       );
   }
+
+  // fetchPaymentRecords(): Observable<CreditCardPayment[]> {
+  //   return this.http.get<CreditCardPayment[]>(
+  //     `${environment.apiUrl}${ENDPOINT.PAYMENT_RECORDS}`,
+  //   )
+  //   .pipe(
+  //     map(records => {
+  //       return records.map(record => {
+  //         return { ...record, amount: record.amount ? record.amount : '' };
+  //       });
+  //     });
+  // }
 }
