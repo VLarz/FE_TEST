@@ -8,13 +8,21 @@
             <input
               placeholder="1234 5678 9101 1121"
               id="card_number"
-              type="number"
-              formControlName="creditCardNumber">
+              type="text"
+              formControlName="creditCardNumber"
+              appCreditCardFormat>
             <label class="active" for="card_number">Credit Card Number</label>
             <span
               class="helper-text"
               *ngIf="paymentForm.get('creditCardNumber').invalid && paymentForm.get('creditCardNumber').touched">
+              <span
+              *ngIf="paymentForm.get('creditCardNumber').errors['required']">
               Credit card number is required.
+              </span>
+              <span
+              *ngIf="paymentForm.get('creditCardNumber').errors['minlength']">
+              Invalid format.
+              </span>
             </span>
           </div>
 
