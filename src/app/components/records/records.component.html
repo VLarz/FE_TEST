@@ -10,7 +10,7 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let record of paymentRecords | async">
+    <tr *ngFor="let record of paymentRecords">
       <td>{{ record.creditCardNumber }}</td>
       <td>{{ record.cardHolder }}</td>
       <td>{{ record.expirationDate | date }}</td>

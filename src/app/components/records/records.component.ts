@@ -1,24 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CreditCardPayment } from 'src/app/models/credit-card-payment.model';
+import { CryptoJSService } from '../../services/cryptojs.service';
 
-import { AppState } from '../../app.state';
+import { AppState } from '../../store/app.state';
 
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
   styleUrls: ['./records.component.scss']
 })
-export class RecordsComponent implements OnInit {
+export class RecordsComponent implements OnInit, OnDestroy {
 
-  paymentRecords: Observable<CreditCardPayment[]>;
+  paymentRecords: CreditCardPayment[] = [];
+  subscription: Subscription;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>,
+              private cryptoJSService: CryptoJSService) { }
 
   ngOnInit(): void {
-    this.paymentRecords = this.store.select('creditCardPayments');
-    // No need to unsubscribe and ngOndestroy, Angular and NgRx will auto unsubscribe.
+    this.initRecords();
+  }
+
+  initRecords(): void {
+    this.subscription = this.store.select('creditCardPayments').subscribe(
+      res => {
+        res.forEach(record => {
+          this.paymentRecords.push({
+            creditCardNumber: this.cryptoJSService.decrypt(record.creditCardNumber),
+            cardHolder: this.cryptoJSService.decrypt(record.cardHolder),
+            expirationDate: this.cryptoJSService.decrypt(record.expirationDate),
+            securityCode: this.cryptoJSService.decrypt(record.securityCode),
+            amount: record.amount,
+          });
+        });
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

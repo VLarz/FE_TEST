@@ -140,7 +140,7 @@
             <button
               type="submit"
               class="btn"
-              [disabled]="paymentForm.invalid">Submit</button>
+              [disabled]="paymentForm.invalid || isExpired">Submit</button>
           </div>
         </div>
       </form>

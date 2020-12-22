@@ -1,10 +1,11 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import Swal from 'sweetalert2';
 
 import { CreditCardPayment } from '../../models/credit-card-payment.model';
+import { CryptoJSService } from '../../services/cryptojs.service';
 import { PaymentService } from '../../services/payment.service';
 import * as PaymentActions from '../../store/credit-card-payment.actions';
 
@@ -28,7 +29,8 @@ export class PaymentComponent implements OnInit {
   }
   constructor(private store: Store<AppState>,
               private paymentService: PaymentService,
-              private readonly formBuilder: FormBuilder) { }
+              private readonly formBuilder: FormBuilder,
+              private cryptoJSService: CryptoJSService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -101,7 +103,7 @@ export class PaymentComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.paymentForm.invalid) {
+    if (this.paymentForm.invalid && this.isExpired) {
       return;
     }
 
@@ -109,10 +111,10 @@ export class PaymentComponent implements OnInit {
     expirationDate.setFullYear(+('20' + this.expirationYear), +this.expirationMonth - 1, 1);
 
     const payload: CreditCardPayment = {
-      creditCardNumber: this.paymentForm.get('creditCardNumber').value,
-      cardHolder: this.paymentForm.get('cardHolder').value,
-      expirationDate,
-      securityCode: this.paymentForm.get('securityCode').value,
+      creditCardNumber: this.cryptoJSService.encrypt(this.paymentForm.get('creditCardNumber').value),
+      cardHolder: this.cryptoJSService.encrypt(this.paymentForm.get('cardHolder').value),
+      expirationDate: this.cryptoJSService.encrypt(expirationDate).toString(),
+      securityCode: this.cryptoJSService.encrypt(this.paymentForm.get('securityCode').value),
       amount: this.paymentForm.get('amount').value
     };
 
@@ -121,7 +123,7 @@ export class PaymentComponent implements OnInit {
         this.store.dispatch(new PaymentActions.AddPayment(payload));
         Swal.fire({
           icon: 'success',
-          title: 'Payment Successfull',
+          title: 'Payment Successful',
         });
         this.paymentForm.reset();
       });
