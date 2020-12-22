@@ -2,6 +2,7 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
+import Swal from 'sweetalert2';
 
 import { CreditCardPayment } from '../../models/credit-card-payment.model';
 import { PaymentService } from '../../services/payment.service';
@@ -99,6 +100,9 @@ export class PaymentComponent implements OnInit {
 
   }
 
+  onTest(): void {
+    Swal.fire('Hello world!');
+  }
   onSubmit(): void {
     if (this.paymentForm.invalid) {
       return;
