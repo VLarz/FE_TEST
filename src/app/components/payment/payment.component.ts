@@ -1,7 +1,7 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.state';
+import { AppState } from 'src/app/store/app.state';
 import Swal from 'sweetalert2';
 
 import { CreditCardPayment } from '../../models/credit-card-payment.model';
@@ -100,23 +100,18 @@ export class PaymentComponent implements OnInit {
 
   }
 
-  onTest(): void {
-    Swal.fire('Hello world!');
-  }
   onSubmit(): void {
     if (this.paymentForm.invalid) {
       return;
     }
 
-    const month = this.paymentForm.get('expirationMonth').value;
-    const year = this.paymentForm.get('expirationMonth').value;
-    const newDate = new Date();
-    newDate.setFullYear(+('20' + year), +month - 1, 1);
+    const expirationDate = new Date();
+    expirationDate.setFullYear(+('20' + this.expirationYear), +this.expirationMonth - 1, 1);
 
     const payload: CreditCardPayment = {
       creditCardNumber: this.paymentForm.get('creditCardNumber').value,
       cardHolder: this.paymentForm.get('cardHolder').value,
-      expirationDate: newDate,
+      expirationDate,
       securityCode: this.paymentForm.get('securityCode').value,
       amount: this.paymentForm.get('amount').value
     };
@@ -124,7 +119,10 @@ export class PaymentComponent implements OnInit {
     this.paymentService.storePaymentRecords(payload)
       .subscribe(() => {
         this.store.dispatch(new PaymentActions.AddPayment(payload));
-        alert('Payment Successful');
+        Swal.fire({
+          icon: 'success',
+          title: 'Payment Successfull',
+        });
         this.paymentForm.reset();
       });
   }

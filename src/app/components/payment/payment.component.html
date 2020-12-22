@@ -2,7 +2,7 @@
   <div class="col s12 m7 offset-m3 l6 offset-l3">
     <div class="card-panel">
 
-      <form [formGroup]="paymentForm" (ngSubmit)="onTest()">
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="input-field col s12">
             <input
@@ -140,7 +140,7 @@
             <button
               type="submit"
               class="btn"
-              [disabled]="!paymentForm.invalid">Submit</button>
+              [disabled]="paymentForm.invalid">Submit</button>
           </div>
         </div>
       </form>
