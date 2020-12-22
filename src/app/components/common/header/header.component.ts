@@ -14,5 +14,4 @@ export class HeaderComponent implements OnInit {
     const sidenav = document.querySelectorAll('.sidenav');
     M.Sidenav.init(sidenav, null);
   }
-
 }
