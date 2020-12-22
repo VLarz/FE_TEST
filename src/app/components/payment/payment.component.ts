@@ -3,8 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 
-import * as PaymentActions from '../../store/credit-card-payment.actions';
 import { CreditCardPayment } from '../../models/credit-card-payment.model';
+import { PaymentService } from '../../services/payment.service';
+import * as PaymentActions from '../../store/credit-card-payment.actions';
 
 @Component({
   selector: 'app-payment',
@@ -16,7 +17,8 @@ export class PaymentComponent implements OnInit {
   isSuccessful = false;
   paymentForm: FormGroup;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>,
+              private paymentService: PaymentService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -90,10 +92,11 @@ export class PaymentComponent implements OnInit {
       amount: this.paymentForm.get('amount').value
     };
 
-    this.store.dispatch(new PaymentActions.AddPayment(payload));
-
-    this.paymentForm.reset();
-    alert('Payment Successful');
-
+    this.paymentService.storePaymentRecords(payload)
+      .subscribe(() => {
+        this.store.dispatch(new PaymentActions.AddPayment(payload));
+        alert('Payment Successful');
+        this.paymentForm.reset();
+    });
   }
 }
