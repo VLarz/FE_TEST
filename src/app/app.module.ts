@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -5,19 +6,17 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CreditCardPaymentComponent } from './components/credit-card/credit-card-payment/credit-card-payment.component';
-import { CreditCardViewPaymentComponent } from './components/credit-card/credit-card-view-payment/credit-card-view-payment.component';
-import { CreditCardComponent } from './components/credit-card/credit-card.component';
-import { creditCardPaymentReducer } from './components/credit-card/store/credit-card-payment.reducer';
 import { HeaderComponent } from './components/common/header/header.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { RecordsComponent } from './components/records/records.component';
+import { creditCardPaymentReducer } from './store/credit-card-payment.reducer';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreditCardPaymentComponent,
-    CreditCardComponent,
-    CreditCardViewPaymentComponent,
     HeaderComponent,
+    PaymentComponent,
+    RecordsComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +25,8 @@ import { HeaderComponent } from './components/common/header/header.component';
       creditCardPayments: creditCardPaymentReducer
     }),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
