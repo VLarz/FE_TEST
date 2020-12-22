@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col s12 m7 offset-m3 l6 offset-l3">
     <div class="card-panel">
+
       <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="input-field col s12">
@@ -16,10 +17,10 @@
               class="helper-text"
               *ngIf="paymentForm.get('creditCardNumber').invalid && paymentForm.get('creditCardNumber').touched">
               <span *ngIf="paymentForm.get('creditCardNumber').errors['required']">
-              Credit card number is required.
+                Credit card number is required
               </span>
               <span *ngIf="paymentForm.get('creditCardNumber').errors['minlength']">
-              Invalid format.
+                Invalid format
               </span>
             </span>
           </div>
@@ -32,33 +33,39 @@
               formControlName="cardHolder">
             <label class="active" for="card_holder">Card Holder</label>
             <span
-            class="helper-text"
-            *ngIf="paymentForm.get('cardHolder').invalid && paymentForm.get('cardHolder').touched">
-            Card Holder is required.
+              class="helper-text"
+              *ngIf="paymentForm.get('cardHolder').invalid && paymentForm.get('cardHolder').touched">
+              Card Holder is required
             </span>
           </div>
 
           <div class="input-field col s3">
             <input
               placeholder="MM"
-              id="card_holder"
+              id="expirationMonth"
               type="text"
               maxlength="2"
               formControlName="expirationMonth">
-            <label class="active" >Expiration</label>
+            <label class="active" for="expirationMonth">Expiration</label>
             <span
               class="helper-text"
               *ngIf="paymentForm.get('expirationMonth').invalid && paymentForm.get('expirationMonth').touched">
               <span
-              *ngIf="paymentForm.get('expirationMonth').errors['required']">
-              Month is required!
+                *ngIf="paymentForm.get('expirationMonth').errors['required']">
+                Month is required
               </span>
               <span
-              *ngIf="paymentForm.get('expirationMonth').errors['pattern']
-              || paymentForm.get('expirationMonth').errors['monthExceeded']
-              && !paymentForm.get('expirationMonth').errors['required']">
-              Month must be a number between 01 and 12
+                *ngIf="paymentForm.get('expirationMonth').errors['pattern']
+                || paymentForm.get('expirationMonth').errors['monthExceeded']
+                && !paymentForm.get('expirationMonth').errors['required']">
+                Month must be a number between 01 and 12
               </span>
+            </span>
+            <span
+              class="helper-text"
+              *ngIf="isExpired && paymentForm.get('expirationMonth').touched
+              && paymentForm.get('expirationYear').touched">
+              Card expired
             </span>
           </div>
 
@@ -72,12 +79,12 @@
               class="helper-text"
               *ngIf="paymentForm.get('expirationYear').invalid && paymentForm.get('expirationYear').touched">
               <span
-              *ngIf="paymentForm.get('expirationYear').errors['required']">
-              Year is required!
+                *ngIf="paymentForm.get('expirationYear').errors['required']">
+                Year is required
               </span>
               <span
-              *ngIf="paymentForm.get('expirationYear').errors['pattern']">
-              Year must be a number only.
+                *ngIf="paymentForm.get('expirationYear').errors['pattern']">
+                Year must be a number only
               </span>
             </span>
           </div>
@@ -94,16 +101,16 @@
               class="helper-text"
               *ngIf="paymentForm.get('securityCode').invalid && paymentForm.get('securityCode').touched">
               <span
-              *ngIf="paymentForm.get('securityCode').errors['required']">
-              CCV is required!
+                *ngIf="paymentForm.get('securityCode').errors['required']">
+                CCV is required
               </span>
               <span
-              *ngIf="paymentForm.get('securityCode').errors['pattern']">
-              CCV must be a number only.
+                *ngIf="paymentForm.get('securityCode').errors['pattern']">
+                CCV must be a number only
               </span>
               <span
-              *ngIf="paymentForm.get('securityCode').errors['minlength']">
-              CCV must be a 3 digits.
+                *ngIf="paymentForm.get('securityCode').errors['minlength']">
+                CCV must be a 3 digits
               </span>
             </span>
           </div>
@@ -112,23 +119,23 @@
             <input
               placeholder="1000000"
               id="card_holder"
-              type="number"
+              type="text"
+              (keypress)="numberOnly($event)"
               formControlName="amount">
             <label class="active" for="card_holder">Amount</label>
             <span
               class="helper-text"
               *ngIf="paymentForm.get('amount').invalid && paymentForm.get('amount').touched">
               <span
-              *ngIf="paymentForm.get('amount').errors['required']">
-              Amount is required!
+                *ngIf="paymentForm.get('amount').errors['required']">
+                Amount is required
               </span>
               <span
-              *ngIf="paymentForm.get('amount').errors['pattern']">
-              Amount must be not negative or zero.
+                *ngIf="paymentForm.get('amount').errors['pattern']">
+                Amount must be not zero
               </span>
             </span>
           </div>
-
           <div class="col s12 center">
             <button
               type="submit"
@@ -137,6 +144,7 @@
           </div>
         </div>
       </form>
+
     </div>
   </div>
 </div>

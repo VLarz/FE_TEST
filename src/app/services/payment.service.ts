@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-
 import { CreditCardPayment } from '../models/credit-card-payment.model';
 import { environment } from '../../environments/environment';
 import { ENDPOINT } from '../const/endpoints.const';

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ɵConsole } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 
@@ -15,10 +15,19 @@ import * as PaymentActions from '../../store/credit-card-payment.actions';
 export class PaymentComponent implements OnInit {
 
   isSuccessful = false;
+  isExpired = false;
   paymentForm: FormGroup;
 
+  get expirationMonth(): string {
+    return this.paymentForm.get('expirationMonth').value;
+  }
+
+  get expirationYear(): string {
+    return this.paymentForm.get('expirationYear').value;
+  }
   constructor(private store: Store<AppState>,
-              private paymentService: PaymentService) { }
+              private paymentService: PaymentService,
+              private readonly formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -27,7 +36,7 @@ export class PaymentComponent implements OnInit {
   initForm(): void {
     const allowDigitOnly = /^[0-9]\d*$/;
 
-    this.paymentForm = new FormGroup({
+    this.paymentForm = this.formBuilder.group({
       creditCardNumber: new FormControl(
         null,
         [
@@ -42,43 +51,53 @@ export class PaymentComponent implements OnInit {
           Validators.required,
           Validators.pattern(allowDigitOnly),
           this.monthValidation.bind(this),
-          // this.expirationValidation.bind(this)
+          this.expirationValidation.bind(this)
         ]),
-      expirationYear: new FormControl(null, [Validators.required, Validators.pattern(allowDigitOnly)]),
+      expirationYear: new FormControl(
+        null,
+        [
+          Validators.required,
+          Validators.pattern(allowDigitOnly),
+          this.expirationValidation.bind(this)
+        ]
+      ),
       securityCode: new FormControl(
         null,
         [
           Validators.required,
           Validators.pattern(allowDigitOnly),
-          Validators.minLength(3)
+          Validators.minLength(3),
         ]
       ),
       amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
     });
   }
 
-  monthValidation(control: FormControl): {[s: string]: boolean} {
+  monthValidation(control: FormControl): { [s: string]: boolean } {
     if (control.value > 12 || +control.value === 0 || control.value === '00') {
-      return {monthExceeded: true};
+      return { monthExceeded: true };
     }
     return null;
   }
 
-  // var yy = today.getFullYear().toString().substr(-2);
+  expirationValidation(control: FormControl): void {
+    if (control.value === null) {
+      return;
+    }
 
-  // expirationValidation(): {[s: string]: boolean} {
+    if (+this.expirationMonth < 13 && this.expirationMonth && this.expirationYear) {
+      const newDate = new Date();
+      newDate.setFullYear(+('20' + this.expirationYear), +this.expirationMonth - 1, 1);
+      const currentDate = new Date();
+      if (newDate < currentDate) {
+        console.log(true);
+        this.isExpired = true;
+      } else {
+        this.isExpired = false;
+      }
+    }
 
-  //   if (this.paymentForm.get('expirationMonth').value) {
-  //     return;
-  //   }
-  //   // const month = '12';
-  //   // const year = this.paymentForm.get('expirationYear').value;
-  //   const currentMonth = new Date().getMonth() + 1;
-  //   const currentYear = new Date().getFullYear().toString().substr(-2);
-  //   // if (+month <= currentMonth) {
-  //   //   return {expired: true};
-  //   // }
-  // }
+  }
 
   onSubmit(): void {
     if (this.paymentForm.invalid) {
@@ -103,7 +122,7 @@ export class PaymentComponent implements OnInit {
         this.store.dispatch(new PaymentActions.AddPayment(payload));
         alert('Payment Successful');
         this.paymentForm.reset();
-    });
+      });
   }
 
   numberOnly(event): boolean {
@@ -112,6 +131,5 @@ export class PaymentComponent implements OnInit {
       return false;
     }
     return true;
-
   }
 }
