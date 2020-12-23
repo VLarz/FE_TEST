@@ -41,6 +41,11 @@ export class RecordsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    /**
+     * No need unsubcribe because Angular and NgRx will auto subcribe
+     * but to be sure I choose this approach for extra safety to
+     * avoid memory leak
+     */
   }
 
 }
