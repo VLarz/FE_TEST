@@ -118,11 +118,11 @@
           <div class="input-field col s12">
             <input
               placeholder="1000000"
-              id="card_holder"
+              id="amount"
               type="text"
               (keypress)="numberOnly($event)"
               formControlName="amount">
-            <label class="active" for="card_holder">Amount</label>
+            <label class="active" for="amount">Amount</label>
             <span
               class="helper-text"
               *ngIf="paymentForm.get('amount').invalid && paymentForm.get('amount').touched">
